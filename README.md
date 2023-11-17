@@ -122,12 +122,13 @@ require_once __DIR__ . '/vendor/autoload.php';
 //you can add shema of the bins
 $packager = new Packager(2, SortType::DESCENDING);
 // add custom bins as shema  
-// new Bin('Stock 4 DWB', length, height, breadth, weight),
+// new Bin('Box1', length, height, breadth, weight),
 $packager->addBinShemas([
-    new BinShema('Stock 4 DWB', 29.3, 22.8, 29.8, 4.98),
-    new BinShema('Stock 5 DWB', 29.8, 29.9, 44.9, 10),
-    new BinShema('Stock 6 DWB', 29.3, 44.8, 60.8, 20),
+    new BinShema('Box1', 29.3, 22.8, 29.8, 4.98),
+    new BinShema('Box2', 29.8, 29.9, 44.9, 10),
+    new BinShema('Box3', 29.3, 44.8, 60.8, 20),
 ]);
+
 // add new items as much as you need
 $packager->addItem(new Item("AU2814", 8, 6, 8, 0.3));
 $packager->addItem(new Item("SB-6070", 3, 5, 5, 1));
