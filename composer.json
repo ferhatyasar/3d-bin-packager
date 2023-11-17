@@ -1,5 +1,5 @@
 {
-    "name": "latuconsinafr/3d-bin-packager",
+    "name": "ferhatyasar/3d-bin-packager",
     "description": "PHP Library for 3D Bin Packing.",
     "keywords": [
         "php",
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Latuconsinafr\\BinPackager\\BinPackager3D\\": "src/"
+            "ferhatyasar\\BinPackager\\BinPackager3D\\": "src/"
         }
     },
     "require-dev": {
