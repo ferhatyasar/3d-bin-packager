@@ -24,16 +24,34 @@ final class Packager implements \JsonSerializable
      * @var iterable The bins.
      */
     private iterable $bins;
+    /**
+     * @var iterable The bins.
+     */
+    private iterable $binShemas;
 
     /**
      * @var iterable The items to put into the bins.
      */
     private iterable $items;
+    /**
+     * @var int The counter of items and bins in usage for unique id .
+     */
+    private iterable $counter;
 
     /**
      * @var float The total bins volume inside the packager.
      */
     private float $totalBinsVolume;
+
+    /**
+     * @var float The total fitted items volume inside the packager.
+     */
+    private float $totalFittedVolume;
+
+    /**
+     * @var float The total fitted items weight inside the packager.
+     */
+    private float $totalFittedWeight;
 
     /**
      * @var float The total bins weight inside the packager.
@@ -72,11 +90,17 @@ final class Packager implements \JsonSerializable
         if ($sortMethod != -1 && $sortMethod != 1) {
             throw new \UnexpectedValueException("The sort method should be either 1 (for ascending) or -1 (for descending).");
         }
+        // print_r($precision);
+        // die;
 
+        $this->binShemas = [];
         $this->bins = [];
         $this->items = [];
+        $this->counter = array("bins" => [], "items" => []);
         $this->totalBinsVolume = 0;
         $this->totalBinsWeight = 0;
+        $this->totalFittedVolume = 0;
+        $this->totalFittedWeight = 0;
         $this->totalItemsVolume = 0;
         $this->totalItemsWeight = 0;
         $this->precision = $precision;
@@ -177,7 +201,77 @@ final class Packager implements \JsonSerializable
             return 0;
         }
 
-        return (int)ceil($this->totalItemsVolume/ $this->totalBinsVolume);
+        return (int)ceil($this->totalItemsVolume / $this->totalBinsVolume);
+    }
+
+    /**
+     * The item's counter getter.
+     * 
+     * @return mixed The item's counter.
+     */
+    public function getItemCounter($item)
+    {
+        if (!isset($this->counter['items'][$item->getName()])) $this->counter['items'][$item->getName()] = 0;
+        return $this->counter['items'][$item->getName()];
+    }
+
+
+    /**
+     * The bin's counter getter.
+     * 
+     * @return mixed The item's counter.
+     */
+    public function getBinCounter($bin)
+    {
+        if (!isset($this->counter['bins'][$bin->getName()])) $this->counter['bins'][$bin->getName()] = 0;
+        return $this->counter['bins'][$bin->getName()];
+    }
+
+    /**
+     * The add bin to the packager method.
+     * The bin(s) would become the container for the item(s).
+     * 
+     * @param Bin $bin The bin to contain the item(s).
+     * 
+     * @return void
+     */
+    public function addBinShema(BinShema $bin): void
+    {
+        // \print_r($bin);die;
+        // foreach ($this->bins as $existingBin) {
+        //     if ($existingBin->getId() === $bin->getId()) {
+        //         throw new \UnexpectedValueException("Bin id should be unique.");
+        //     }
+        // }
+        if (isset($this->binShemas[$bin->getName()])) {
+            throw new \UnexpectedValueException($bin->getName() . "Bin Shema id should be unique.");
+        }
+        if (!isset($this->binShemas[$bin->getName()])) $this->binShemas[$bin->getName()] = $bin;
+
+        if (!isset($this->counter['bins'][$bin->getName()])) $this->counter['bins'][$bin->getName()] = 0;
+        // $this->counter['bins'][$bin->getName()]++;
+        $bin->setPrecision($this->precision);
+        // $this->bins[$binId] = $bin;
+        // $this->totalBinsVolume += $bin->getVolume();
+        // $this->totalBinsWeight += $bin->getWeight();
+    }
+    /**
+     * The add bins to the shema
+     * The bins would become the container for the items.
+     * 
+     * @param iterable $bins The iterable of @see Bin to contain the item(s).
+     * 
+     * @return void
+     */
+    public function addBinShemas(iterable $bins): void
+    {
+        foreach ($bins as $bin) {
+            if (!$bin instanceof BinShema) {
+                throw new \UnexpectedValueException("Bin should be an instance of Bin class.");
+            }
+
+            $this->addBinShema($bin);
+        }
     }
 
     /**
@@ -190,15 +284,22 @@ final class Packager implements \JsonSerializable
      */
     public function addBin(Bin $bin): void
     {
-        foreach ($this->bins as $existingBin) {
-            if ($existingBin->getId() === $bin->getId()) {
-                throw new \UnexpectedValueException("Bin id should be unique.");
-            }
+        // \print_r($bin);die;
+        // foreach ($this->bins as $existingBin) {
+        //     if ($existingBin->getId() === $bin->getId()) {
+        //         throw new \UnexpectedValueException("Bin id should be unique.");
+        //     }
+        // }
+        $binId = $bin->getName() . "-" . $this->getBinCounter($bin);
+        $bin->setId($binId);
+        if (isset($this->bins[$binId])) {
+            throw new \UnexpectedValueException($binId . "Bin id should be unique.a");
         }
-
+        if (!isset($this->counter['bins'][$bin->getName()])) $this->counter['bins'][$bin->getName()] = 0;
+        $this->counter['bins'][$bin->getName()]++;
         $bin->setPrecision($this->precision);
-
-        $this->bins[$bin->getId()] = $bin;
+        if (!isset($this->binShemas[$bin->getName()])) $this->binShemas[$bin->getName()] = $bin;
+        $this->bins[$binId] = $bin;
         $this->totalBinsVolume += $bin->getVolume();
         $this->totalBinsWeight += $bin->getWeight();
     }
@@ -232,14 +333,26 @@ final class Packager implements \JsonSerializable
      */
     public function addItem(Item $item): void
     {
-        foreach ($this->items as $existingItem) {
-            if ($existingItem->getId() === $item->getId()) {
-                throw new \UnexpectedValueException("Item id should be unique.");
-            }
+        // foreach ($this->items as $existingItem) {
+        //     if ($existingItem->getId() === $item->getId()) {
+        //         throw new \UnexpectedValueException("Item id should be unique.");
+        //     }
+        // }
+        // if (!isset($this->counter['items'][$item->getName()])) $this->counter['items'][$item->getName()] = 0;
+        $itemId = $item->getName() . "-" . $this->getItemCounter($item);
+        $item->setId($itemId);
+        if (isset($this->items[$itemId])) {
+            throw new \UnexpectedValueException($itemId . "Item id should be unique.a");
         }
+        if (!isset($this->counter['items'][$item->getName()])) $this->counter['items'][$item->getName()] = 0;
+        $this->counter['items'][$item->getName()]++;
 
+
+        if (isset($this->items[$item->getId()])) {
+            throw new \UnexpectedValueException("Item id should be unique.");
+        }
         $item->setPrecision($this->precision);
-        
+
         $this->items[$item->getId()] = $item;
         $this->totalItemsVolume += $item->getVolume();
         $this->totalItemsWeight += $item->getWeight();
@@ -288,7 +401,7 @@ final class Packager implements \JsonSerializable
         // Bin has no fitted items yet
         if (iterator_count($bin->getIterableFittedItems()) === 0) {
             if (!$bin->putItem($item, PositionType::START_POSITION)) {
-                $bin->setUnfittedItems($item);
+                // $bin->setUnfittedItems($item);
             }
 
             return;
@@ -335,7 +448,7 @@ final class Packager implements \JsonSerializable
         }
 
         if (!$fitted) {
-            $bin->setUnfittedItems($item);
+            // $bin->setUnfittedItems($item);
         }
     }
 
@@ -399,6 +512,49 @@ final class Packager implements \JsonSerializable
         }
     }
 
+    public function createParcels(): void
+    {
+
+        $loop = 0;
+        // create bins as much as needed and fill with items 
+        do {
+            $totalItems =  count($this->items);
+            if ($totalItems) {
+                $leftValue =  $this->totalItemsVolume - $this->totalFittedVolume;
+                $leftKg =  $this->totalItemsWeight - $this->totalFittedWeight;
+                foreach ($this->binShemas as $bin) {
+                    // echo "($leftValue < 0  && $leftKg < 0 || " . $bin->getVolume() . "> $leftValue &&  " . $bin->getWeight() . " > $leftKg \n";
+                    if ($leftValue < 0  && $leftKg < 0 || $bin->getVolume() > $leftValue &&  $bin->getWeight() > $leftKg) break;
+                }
+                $binn =  new Bin($bin->getId(), $bin->getLength(), $bin->getHeight(), $bin->getBreadth(), $bin->getWeight());
+                $this->addBin($binn);
+                if (iterator_count($this->getIterableItems()) === 0) {
+                    break;
+                }
+                // Pack item(s) to current open bin
+                foreach ($this->items as $item) {
+                    $this->packItemToBin($binn, $item);
+                }
+                $fittedItems = $binn->getFittedItems();
+                $this->totalFittedVolume += $binn->getTotalFittedVolume();
+                $this->totalFittedWeight += $binn->getTotalFittedWeight();
+
+                foreach ($fittedItems as $fittedItem) {
+                    // Remove the packed item(s)
+                    if ($this->getIterableItems()->offsetExists($fittedItem->getId())) unset($this->items[$fittedItem->getId()]);
+                }
+
+                $totalItems =  count($this->items);
+            }
+            $loop++;
+            if ($loop > 100) {
+                // \print_r($this);
+                // die;
+                throw new \UnexpectedValueException(count($this->items) . " Item left. To much item to fit in.");
+                break;
+            }
+        } while ($totalItems > 0 || $loop < 100);
+    }
     /**
      * The json serialize method.
      * 

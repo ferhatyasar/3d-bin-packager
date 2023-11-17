@@ -26,6 +26,11 @@ final class Item implements \JsonSerializable
     private $id;
 
     /**
+     * @var mixed The item's name.
+     */
+    private $name;
+
+    /**
      * @var float The item's length.
      */
     private float $length;
@@ -70,7 +75,7 @@ final class Item implements \JsonSerializable
     public function __construct($id, float $length, float $height, float $breadth, float $weight)
     {
         $this->id = $id;
-
+        $this->name = $id;
         $this->length = $length;
         $this->height = $height;
         $this->breadth = $breadth;
@@ -89,6 +94,25 @@ final class Item implements \JsonSerializable
     public function getId()
     {
         return $this->id;
+    }
+    /**
+     * The item's name getter.
+     * 
+     * @return mixed The bin's name.
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * The item's id setter.
+     * 
+     * @return mixed The bin's id.
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**

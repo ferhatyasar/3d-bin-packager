@@ -26,6 +26,11 @@ final class Bin implements \JsonSerializable
     private $id;
 
     /**
+     * @var mixed The bin's name.
+     */
+    private $name;
+
+    /**
      * @var float The bin's length.
      */
     private float $length;
@@ -90,6 +95,7 @@ final class Bin implements \JsonSerializable
     public function __construct($id, float $length, float $height, float $breadth, float $weight)
     {
         $this->id = $id;
+        $this->name = $id;
 
         $this->length = $length;
         $this->height = $height;
@@ -107,6 +113,16 @@ final class Bin implements \JsonSerializable
     }
 
     /**
+     * The bin's name getter.
+     * 
+     * @return mixed The bin's name.
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * The bin's id getter.
      * 
      * @return mixed The bin's id.
@@ -114,6 +130,26 @@ final class Bin implements \JsonSerializable
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * The bin's id setter.
+     * 
+     * @return mixed The bin's id.
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    /**
+     * The bin's resetter.
+     * 
+     * @return mixed The bin's id.
+     */
+    public function resetItems()
+    {
+        $this->fittedItems  = [];
+        $this->unfittedItems  = [];
     }
 
     /**
