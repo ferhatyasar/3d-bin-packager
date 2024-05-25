@@ -9,13 +9,13 @@
 
 declare(strict_types=1);
 
-namespace Latuconsinafr\BinPackager\BinPackager3D\Tests\TestCases;
+namespace ferhatyasar\BinPackager\BinPackager3D\Tests\TestCases;
 
-use Latuconsinafr\BinPackager\BinPackager3D\Bin;
-use Latuconsinafr\BinPackager\BinPackager3D\Item;
-use Latuconsinafr\BinPackager\BinPackager3D\Tests\Fixtures\BinFixture;
-use Latuconsinafr\BinPackager\BinPackager3D\Tests\Fixtures\ItemFixture;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\PositionType;
+use ferhatyasar\BinPackager\BinPackager3D\Bin;
+use ferhatyasar\BinPackager\BinPackager3D\Item;
+use ferhatyasar\BinPackager\BinPackager3D\Tests\Fixtures\BinFixture;
+use ferhatyasar\BinPackager\BinPackager3D\Tests\Fixtures\ItemFixture;
+use ferhatyasar\BinPackager\BinPackager3D\Types\PositionType;
 use PHPUnit\Framework\TestCase;
 
 /**

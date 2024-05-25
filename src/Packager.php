@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Latuconsinafr\BinPackager\BinPackager3D;
+namespace ferhatyasar\BinPackager\BinPackager3D;
 
-use Latuconsinafr\BinPackager\BinPackager3D\Types\AxisType;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\PositionType;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\SortType;
+use ferhatyasar\BinPackager\BinPackager3D\Types\AxisType;
+use ferhatyasar\BinPackager\BinPackager3D\Types\PositionType;
+use ferhatyasar\BinPackager\BinPackager3D\Types\SortType;
 
 /**
  * A main packager class to pack all the items into all the bins.

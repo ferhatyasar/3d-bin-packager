@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
- use Latuconsinafr\BinPackager\BinPackager3D\Bin;
- use Latuconsinafr\BinPackager\BinPackager3D\BinShema;
- use Latuconsinafr\BinPackager\BinPackager3D\Item;
- use Latuconsinafr\BinPackager\BinPackager3D\Packager;
- use Latuconsinafr\BinPackager\BinPackager3D\Types\SortType;
+ use ferhatyasar\BinPackager\BinPackager3D\Bin;
+ use ferhatyasar\BinPackager\BinPackager3D\BinShema;
+ use ferhatyasar\BinPackager\BinPackager3D\Item;
+ use ferhatyasar\BinPackager\BinPackager3D\Packager;
+ use ferhatyasar\BinPackager\BinPackager3D\Types\SortType;
 /**
  * 3D Bin Packager
  *

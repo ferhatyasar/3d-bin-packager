@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Latuconsinafr\BinPackager\BinPackager3D\Tests\Fixtures;
+namespace ferhatyasar\BinPackager\BinPackager3D\Tests\Fixtures;
 
 /**
  * Bin fixture.

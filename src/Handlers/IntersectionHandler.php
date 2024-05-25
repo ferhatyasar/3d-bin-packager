@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Latuconsinafr\BinPackager\BinPackager3D\Handlers;
+namespace ferhatyasar\BinPackager\BinPackager3D\Handlers;
 
-use Latuconsinafr\BinPackager\BinPackager3D\Item;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\AxisType;
+use ferhatyasar\BinPackager\BinPackager3D\Item;
+use ferhatyasar\BinPackager\BinPackager3D\Types\AxisType;
 
 /**
  * Class to handle intersection between items.

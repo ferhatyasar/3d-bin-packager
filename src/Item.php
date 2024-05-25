@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Latuconsinafr\BinPackager\BinPackager3D;
+namespace ferhatyasar\BinPackager\BinPackager3D;
 
-use Latuconsinafr\BinPackager\BinPackager3D\Types\AxisType;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\PositionType;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\RotationCombinationType;
+use ferhatyasar\BinPackager\BinPackager3D\Types\AxisType;
+use ferhatyasar\BinPackager\BinPackager3D\Types\PositionType;
+use ferhatyasar\BinPackager\BinPackager3D\Types\RotationCombinationType;
 
 /**
  * A class representative of a single item to put into the @see Bin.

@@ -1,6 +1,6 @@
 # 3D Bin Packager
-![build](https://github.com/latuconsinafr/3d-bin-packager/actions/workflows/ci-workflow.yml/badge.svg)
-[![codecov](https://codecov.io/gh/latuconsinafr/3d-bin-packager/branch/main/graph/badge.svg?token=6T6HY94VGP)](https://codecov.io/gh/latuconsinafr/3d-bin-packager)
+![build](https://github.com/ferhatyasar/3d-bin-packager/actions/workflows/ci-workflow.yml/badge.svg)
+[![codecov](https://codecov.io/gh/ferhatyasar/3d-bin-packager/branch/main/graph/badge.svg?token=6T6HY94VGP)](https://codecov.io/gh/ferhatyasar/3d-bin-packager)
 
 This package contains a PHP implementation to solve 3d bin packing problems based on [gedex](https://github.com/gedex/bp3d) implementation on Go and [enzoruiz](https://github.com/enzoruiz/3dbinpacking) implementation on Python with some modifications to make it more modular.
 
@@ -10,7 +10,7 @@ Install by adding the package as a [Composer](https://getcomposer.org)
 requirement:
 
 ```bash
-$ composer require latuconsinafr/3d-bin-packager
+$ composer require ferhatyasar/3d-bin-packager
 ```
 
 ## Usage
@@ -104,11 +104,11 @@ To get the result and other details after the packing are listed below:
 
 declare(strict_types=1);
 
- use Latuconsinafr\BinPackager\BinPackager3D\Bin;
- use Latuconsinafr\BinPackager\BinPackager3D\BinShema;
- use Latuconsinafr\BinPackager\BinPackager3D\Item;
- use Latuconsinafr\BinPackager\BinPackager3D\Packager;
- use Latuconsinafr\BinPackager\BinPackager3D\Types\SortType;
+ use ferhatyasar\BinPackager\BinPackager3D\Bin;
+ use ferhatyasar\BinPackager\BinPackager3D\BinShema;
+ use ferhatyasar\BinPackager\BinPackager3D\Item;
+ use ferhatyasar\BinPackager\BinPackager3D\Packager;
+ use ferhatyasar\BinPackager\BinPackager3D\Types\SortType;
 /**
  * 3D Bin Packager
  *
@@ -168,4 +168,4 @@ die;
 - https://github.com/gedex/bp3d
 
 ## License
-This package is under [MIT](https://github.com/latuconsinafr/3d-bin-packager/blob/main/LICENSE) license.
+This package is under [MIT](https://github.com/ferhatyasar/3d-bin-packager/blob/main/LICENSE) license.

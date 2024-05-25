@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Latuconsinafr\BinPackager\BinPackager3D;
+namespace ferhatyasar\BinPackager\BinPackager3D;
 
-use Latuconsinafr\BinPackager\BinPackager3D\Handlers\IntersectionHandler;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\AxisType;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\RotationCombinationType;
+use ferhatyasar\BinPackager\BinPackager3D\Handlers\IntersectionHandler;
+use ferhatyasar\BinPackager\BinPackager3D\Types\AxisType;
+use ferhatyasar\BinPackager\BinPackager3D\Types\RotationCombinationType;
 
 /**
  * A class representative of a single bin to put @see Item into.

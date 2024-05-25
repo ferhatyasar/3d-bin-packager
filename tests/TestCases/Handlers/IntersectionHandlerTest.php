@@ -9,13 +9,13 @@
 
 declare(strict_types=1);
 
-namespace Latuconsinafr\BinPackager\BinPackager3D\Tests\TestCases\Handlers;
+namespace ferhatyasar\BinPackager\BinPackager3D\Tests\TestCases\Handlers;
 
-use Latuconsinafr\BinPackager\BinPackager3D\Handlers\IntersectionHandler;
-use Latuconsinafr\BinPackager\BinPackager3D\Item;
-use Latuconsinafr\BinPackager\BinPackager3D\Tests\Fixtures\ItemFixture;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\AxisType;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\PositionType;
+use ferhatyasar\BinPackager\BinPackager3D\Handlers\IntersectionHandler;
+use ferhatyasar\BinPackager\BinPackager3D\Item;
+use ferhatyasar\BinPackager\BinPackager3D\Tests\Fixtures\ItemFixture;
+use ferhatyasar\BinPackager\BinPackager3D\Types\AxisType;
+use ferhatyasar\BinPackager\BinPackager3D\Types\PositionType;
 use PHPUnit\Framework\TestCase;
 
 /**

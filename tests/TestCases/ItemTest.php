@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Latuconsinafr\BinPackager\BinPackager3D\Tests\TestCases;
+namespace ferhatyasar\BinPackager\BinPackager3D\Tests\TestCases;
 
-use Latuconsinafr\BinPackager\BinPackager3D\Item;
-use Latuconsinafr\BinPackager\BinPackager3D\Tests\Fixtures\ItemFixture;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\AxisType;
-use Latuconsinafr\BinPackager\BinPackager3D\Types\RotationCombinationType;
+use ferhatyasar\BinPackager\BinPackager3D\Item;
+use ferhatyasar\BinPackager\BinPackager3D\Tests\Fixtures\ItemFixture;
+use ferhatyasar\BinPackager\BinPackager3D\Types\AxisType;
+use ferhatyasar\BinPackager\BinPackager3D\Types\RotationCombinationType;
 use PHPUnit\Framework\TestCase;
 
 /**
