@@ -59,6 +59,21 @@ final class Packager implements \JsonSerializable
     private float $totalBinsWeight;
 
     /**
+     * @var float The total bins Height inside the packager.
+     */
+    private float $binFitHeight;
+
+    /**
+     * @var float The total bins Length inside the packager.
+     */
+    private float $binFitLenght;
+
+    /**
+     * @var float The total bins Width inside the packager.
+     */
+    private float $binFitWidht;
+
+    /**
      * @var float The total items volume inside the packager.
      */
     private float $totalItemsVolume;
@@ -246,6 +261,9 @@ final class Packager implements \JsonSerializable
         if (isset($this->binShemas[$bin->getName()])) {
             throw new \UnexpectedValueException($bin->getName() . "Bin Shema id should be unique.");
         }
+        // $bin->binFitWidth = 0;
+        // $bin->binFitHeight = 0;
+        // $bin->binFitLenght = 0;
         if (!isset($this->binShemas[$bin->getName()])) $this->binShemas[$bin->getName()] = $bin;
 
         if (!isset($this->counter['bins'][$bin->getName()])) $this->counter['bins'][$bin->getName()] = 0;
@@ -401,7 +419,7 @@ final class Packager implements \JsonSerializable
         // Bin has no fitted items yet
         if (iterator_count($bin->getIterableFittedItems()) === 0) {
             if (!$bin->putItem($item, PositionType::START_POSITION)) {
-                // $bin->setUnfittedItems($item);
+                $bin->setUnfittedItems($item);
             }
 
             return;
@@ -410,7 +428,6 @@ final class Packager implements \JsonSerializable
         // Bin has fitted item(s) already
         foreach (AxisType::ALL_AXIS as $axis) {
             $fittedItems = $bin->getFittedItems();
-
             foreach ($fittedItems as $fittedItem) {
                 $pivot = PositionType::START_POSITION;
                 $dimension = $fittedItem->getDimension();
@@ -436,8 +453,10 @@ final class Packager implements \JsonSerializable
                 }
 
                 if ($bin->putItem($item, $pivot)) {
+                    // $bin->binFitHeight += $item->getHeight();
+                    // $bin->binFitWidth += $item->getBreadth();
+                    // $bin->binFitLength += $item->getLength();
                     $fitted = true;
-
                     break;
                 }
             }
@@ -470,7 +489,7 @@ final class Packager implements \JsonSerializable
         });
 
         $this->bins = $iterableBins;
-
+        // \var_dump($this);
         // Sort the items based on the sort method value
         $iterableItems = $this->getIterableItems();
         $iterableItems->uasort(function ($a, $b) {
@@ -522,10 +541,79 @@ final class Packager implements \JsonSerializable
             if ($totalItems) {
                 $leftValue =  $this->totalItemsVolume - $this->totalFittedVolume;
                 $leftKg =  $this->totalItemsWeight - $this->totalFittedWeight;
-                foreach ($this->binShemas as $bin) {
-                    // echo "($leftValue < 0  && $leftKg < 0 || " . $bin->getVolume() . "> $leftValue &&  " . $bin->getWeight() . " > $leftKg \n";
-                    if ($leftValue < 0  && $leftKg < 0 || $bin->getVolume() > $leftValue &&  $bin->getWeight() > $leftKg) break;
+                // \var_dump($this->bins);
+                // die; 
+                $foundbin = false;
+                foreach ($this->bins as $key => $prevbin) {
+                    # code...
+
+                    if (!count($prevbin->getFittedItems())) {
+                        $this->totalBinsVolume -= $prevbin->getVolume();
+                        $this->totalBinsWeight -= $prevbin->getWeight();
+                        unset($this->bins[$prevbin->getId()]);
+
+                        // break;
+                    };
+                    // foreach ($this->items as $key => $item) {
+                    //     // print_r ($item->getLength()."<". $prevbin->getLength()."<br>\n");
+                    //     if (
+                    //         $item->getLength() < $prevbin->getLength()
+                    //         &&
+                    //         $item->getBreadth() < $prevbin->getBreadth()
+                    //         &&
+                    //         $item->getHeight() < $prevbin->getHeight()
+                    //     ) {
+                    //         $foundbin = true;
+                    //     }
+                    //     # code...
+                    // }
                 }
+                // if($foundbin) \var_dump($prevbin);
+                // $prevbin = \json_decode (\json_encode($this->bins),true);
+
+                // if ( (count($prevbin)))  $prevbin = $prevbin[$this->bins];
+                // \var_dump($prevbin);
+                foreach ($this->binShemas as $bin) {
+                    // echo "($leftValue < 0  && $leftKg < 0 || " . $bin->getVolume() . "> $leftValue &&  " . $bin->getWeight() . " > $leftKg )\n";
+
+                    // foreach ($this->items as $key => $item) {
+                    //     if (
+                    //         $item->getLength() < $bin->getLength()
+                    //         &&
+                    //         $item->getBreadth() < $bin->getBreadth()
+                    //         &&
+                    //         $item->getHeight() < $bin->getHeight()
+                    //     ) {
+                    //         $foundbin = true;
+                    //     }
+
+                    // }
+                    //  if($foundbin){ 
+                    if (
+                        $leftValue < 0
+                        && $leftKg < 0
+                        ||
+                        $bin->getVolume() > $leftValue
+                        &&  $bin->getWeight() > $leftKg
+                        &&  $bin->getWeight() > $leftKg
+                    ) {
+                        // if (isset($prevbin)) {
+                        //     echo $prevbin->getName() ."!=". $bin->getName()." <br>\n";
+                        //     if (
+                        //         $prevbin->getName()
+                        //         !=
+                        //         $bin->getName()
+                        //     ) {
+                        //         break;
+                        //     }
+                        // } else {
+                        if ($this->counter['bins'][$bin->getName()] == 0 && count($this->items))   break;
+                        // }
+                    }
+                    //  } 
+
+                }
+                // echo  . " <br>\n";
                 $binn =  new Bin($bin->getId(), $bin->getLength(), $bin->getHeight(), $bin->getBreadth(), $bin->getWeight());
                 $this->addBin($binn);
                 if (iterator_count($this->getIterableItems()) === 0) {
@@ -550,7 +638,7 @@ final class Packager implements \JsonSerializable
             if ($loop > 100) {
                 // \print_r($this);
                 // die;
-                throw new \UnexpectedValueException(count($this->items) . " Item left. To much item to fit in.");
+                // throw new \UnexpectedValueException(count($this->items) . " Item left. To big to fit in.");
                 break;
             }
         } while ($totalItems > 0 || $loop < 100);
